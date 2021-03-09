@@ -2,12 +2,14 @@
 // require your posts router and connect it here
 const express = require('express');
 const postsRouter = require('./posts/posts-router');
+const commentsRouter = require('./posts/comments-router');
 
 const server = express();
 
 server.use(express.json());
 
 server.use('/api/posts', postsRouter);
+server.use('/api/posts', commentsRouter);
 
 server.get('/', (req, res) => {
   res.send(`
