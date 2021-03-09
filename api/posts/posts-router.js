@@ -25,6 +25,21 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+router.post('/', async (req, res) => {
+  try {
+    if (!req.body.title || !req.body.contents) {
+      res.status(400).json({ message: "Please provide title and contents for the post" });
+    } else {
+      const newPost = {title: req.body.title, contents: req.body.contents};
+      const insertedPostId = await Posts.insert(newPost);
+      const insertedPost = await Posts.findById(insertedPostId.id);
+      res.status(201).json(insertedPost);
+    }
+  } catch (err) {
+    res.status(500).json({ message: "There was an error while saving the post to the database" });
+  }
+});
+
 // router.get('/:id', async (req, res) => {
 //   try {
 
